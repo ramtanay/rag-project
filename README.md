@@ -121,8 +121,7 @@ ai-study-assistant/
 │   ├── api.js           # Backend communication
 │   └── README.md        # Frontend documentation
 │
-├── README.md            # This file
-└── FRONTEND_INTEGRATION.md
+└── README.md            # This file 
 ```
 
 ---
@@ -134,8 +133,8 @@ ai-study-assistant/
 ## 1️⃣ Clone Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/ai-study-assistant.git
-cd ai-study-assistant
+git clone https://github.com/ramtanay/rag-project.git
+cd rag-project
 ```
 
 ---
