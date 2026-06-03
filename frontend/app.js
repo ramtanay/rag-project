@@ -222,9 +222,13 @@ function setHasDocuments(value) {
  */
 function handleQuestionSubmit(event) {
     event.preventDefault();
+    console.log('Question form submitted');
 
     const questionInput = document.getElementById('question-input');
     const question = questionInput.value.trim();
+
+    console.log('Question value:', question);
+    console.log('Has documents:', appState.hasDocuments);
 
     // Validate question is not empty
     if (!question) {
@@ -247,14 +251,18 @@ function handleQuestionSubmit(event) {
  * @param {string} question - The question to ask
  */
 async function handleAskQuestion(question) {
+    console.log('handleAskQuestion() called');
+    
     // Prevent concurrent queries
     if (appState.isQuerying) {
+        console.log('Already querying, preventing concurrent request');
         displayError('Query already in progress');
         return;
     }
 
     // Update state
     appState.isQuerying = true;
+    console.log('Setting isQuerying to true');
     disableQuestionForm();
 
     try {
@@ -265,7 +273,9 @@ async function handleAskQuestion(question) {
         clearResults();
 
         // Call API
+        console.log('About to call askQuestion API');
         const response = await askQuestion(question);
+        console.log('Got response from API');
 
         // Store results in state
         appState.currentQuestion = response.question;
@@ -288,6 +298,7 @@ async function handleAskQuestion(question) {
     } finally {
         // Always re-enable form
         appState.isQuerying = false;
+        console.log('Setting isQuerying to false');
         enableQuestionForm();
 
         // Clear input

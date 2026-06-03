@@ -22,6 +22,10 @@ def generate_answer(question, retrieved_chunks):
 
     If the answer is not present in the context, say:
     "I could not find that information in the document."
+    Format the answer using:
+    - headings
+    - bullet points
+    - short paragraphs
 
     Context:
     {context}
@@ -55,18 +59,22 @@ def generate_answer(question, retrieved_chunks):
 def check_answer(question, answer):
 
     prompt = f"""
-    You are a helpful AI assistant.
+        You are a helpful AI assistant.
 
-    Check if the answer correctly answers the question.
+        Answer ONLY from the provided context.
+        if the provided context have the answers for the question, say "Yes" and generate the answer, otherwise say "No related context found" .
 
-    Question:
-    {question}
+        Format the answer using:
+        - headings
+        - bullet points
+        - short paragraphs
 
-    Answer:
-    {answer}
+        Context:
+        {context}
 
-    If the answer is correct, say "Correct". Otherwise, say "Incorrect".
-    """
+        Question:
+        {question}
+        """
 
     try:
 

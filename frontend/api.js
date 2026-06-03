@@ -76,13 +76,20 @@ async function uploadFile(file) {
  * @throws {Error} If query fails with descriptive error message
  */
 async function askQuestion(question) {
+    console.log('askQuestion() called with:', question);
+    
     // Encode question as query parameter
     const params = new URLSearchParams({ question });
+    const url = `${API_BASE}/ask?${params}`;
+    
+    console.log('Fetching URL:', url);
 
     try {
-        const response = await fetch(`${API_BASE}/ask?${params}`, {
+        const response = await fetch(url, {
             method: 'POST'
         });
+
+        console.log('Response status:', response.status);
 
         // Handle HTTP errors
         if (!response.ok) {
@@ -92,9 +99,11 @@ async function askQuestion(question) {
 
         // Parse and return JSON response
         const data = await response.json();
+        console.log('Response data:', data);
         return data;
 
     } catch (error) {
+        console.error('Error in askQuestion:', error);
         // Re-throw with context
         if (error instanceof TypeError) {
             throw new Error('Backend unreachable. Check that the backend is running on ' + API_BASE);

@@ -19,7 +19,7 @@ def store_embeddings(chunks, embeddings):
     stored_chunks.extend(chunks)
 
 
-def search_similar_chunks(query_embedding, top_k=3):
+def search_similar_chunks(query_embedding, top_k=5):
 
     query_embedding = np.array([query_embedding]).astype("float32")
 
