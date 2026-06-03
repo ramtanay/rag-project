@@ -222,6 +222,7 @@ debug/
 
 .kiro/hooks/
 .kiro/specs/*/.config.kiro
+.kiro/specs/*
 
 # Keep .kiro/specs/ visible but can be customized:
 # Uncomment below to ignore all spec files
