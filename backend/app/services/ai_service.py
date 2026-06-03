@@ -16,25 +16,29 @@ def generate_answer(question, retrieved_chunks):
     context = context[:2000]
 
     prompt = f"""
-    You are a helpful AI assistant.
+        You are a helpful AI assistant.
 
-    Answer the question ONLY using the provided context.
+        Answer ONLY using the provided context.
 
-    If the answer is not present in the context, say:
-    "I could not find that information in the document."
-    Format the answer using:
-    - headings
-    - bullet points
-    - short paragraphs
+        Rules:
+        - Format answers using Markdown.
+        - Use headings and bullet points.
+        - Correct obvious OCR or PDF extraction errors.
+        Examples:
+        - "Java Script" -> "JavaScript"
+        - "Git Hub" -> "GitHub"
+        - "Num Py" -> "NumPy"
+        - "Lang Chain" -> "LangChain"
+        - "RAMTANA Y" -> "Ramtanay"
+        - Do not invent information not present in the context.
+        - Make the answer clean and professional.
 
-    Context:
-    {context}
+        Context:
+        {context}
 
-    Question:
-    {question}
-
-    Provide a clean and detailed answer.
-    """
+        Question:
+        {question}
+        """
 
     try:
 
