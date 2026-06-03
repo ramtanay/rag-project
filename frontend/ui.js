@@ -99,9 +99,9 @@ function displayResults(data) {
 
     // Display answer with appropriate font styling
     const answerDisplay = document.getElementById('answer-display');
-    answerDisplay.textContent = data.answer;
-    answerDisplay.style.fontSize = '1.1rem';
-    answerDisplay.style.fontWeight = '500';
+
+    answerDisplay.innerHTML = marked.parse(data.answer);
+    answerDisplay.style.fontSize = '1.05rem';
     answerDisplay.style.lineHeight = '1.8';
 
     // Display chunks

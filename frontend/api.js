@@ -6,7 +6,11 @@
  */
 
 // Backend API base URL
-const API_BASE = 'http://localhost:8000';
+const API_BASE =
+    (window.location.hostname === "localhost" ||
+     window.location.hostname === "127.0.0.1")
+        ? "http://localhost:8000"
+        : "https://rag-project-zh1z.onrender.com";// Fallback to localhost for development
 
 /**
  * Check if a file is a valid PDF

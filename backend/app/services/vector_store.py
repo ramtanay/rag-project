@@ -21,21 +21,18 @@ def store_embeddings(chunks, embeddings):
 
 def search_similar_chunks(query_embedding, top_k=5):
 
+    available_chunks = len(stored_chunks)
+
+    top_k = min(top_k, available_chunks)
+
     query_embedding = np.array([query_embedding]).astype("float32")
 
     distances, indices = index.search(query_embedding, top_k)
 
     results = []
-    seen = set()
 
     for idx in indices[0]:
-
         if idx < len(stored_chunks):
-
-            chunk = stored_chunks[idx]
-
-            if chunk not in seen:
-                results.append(chunk)
-                seen.add(chunk)
+            results.append(stored_chunks[idx])
 
     return results
