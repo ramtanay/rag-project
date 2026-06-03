@@ -425,7 +425,6 @@ POST /ask
 - `README.md` - This file (overview & setup)
 - `backend/README.md` - Backend documentation
 - `frontend/README.md` - Frontend documentation
-- `FRONTEND_INTEGRATION.md` - Integration guide
 
 ---
 
@@ -435,7 +434,6 @@ POST /ask
 
 - **Backend Issues?** → See `backend/README.md`
 - **Frontend Issues?** → See `frontend/README.md`
-- **Integration Problems?** → See `FRONTEND_INTEGRATION.md`
 - **API Questions?** → Visit `http://localhost:8000/docs` (Swagger UI)
 
 ## Troubleshooting
@@ -460,6 +458,6 @@ If you liked this project, consider giving it a ⭐ on GitHub!
 ### 🚀 Full-Stack AI Study Assistant
 ### FastAPI Backend | Vanilla Frontend | Groq LLM
 
-**[Backend README](./backend/README.md) | [Frontend README](./frontend/README.md) | [Integration Guide](./FRONTEND_INTEGRATION.md)**
+**[Backend README](./backend/README.md) | [Frontend README](./frontend/README.md) |**
 
 </div>
