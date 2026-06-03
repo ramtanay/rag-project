@@ -1,0 +1,94 @@
+# ============================================
+# FRONTEND FOLDER GITIGNORE
+# ============================================
+
+# ============================================
+# NODE MODULES (if ever added)
+# ============================================
+
+node_modules/
+npm-debug.log
+npm-debug.log.*
+yarn-error.log
+yarn-error.log.*
+package-lock.json
+yarn.lock
+
+# ============================================
+# BUILD & DIST
+# ============================================
+
+dist/
+build/
+.cache/
+out/
+
+# ============================================
+# IDE & EDITOR
+# ============================================
+
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+
+# ============================================
+# OS FILES
+# ============================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+.VolumeIcon.icns
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+.directory
+
+# ============================================
+# TEMPORARY FILES
+# ============================================
+
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+.vscode/
+
+# ============================================
+# DEVELOPMENT ARTIFACTS
+# ============================================
+
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
+
+# ============================================
+# COVERAGE & TESTING
+# ============================================
+
+.coverage
+htmlcov/
+.pytest_cache/
+
+# ============================================
+# MISC
+# ============================================
+
+# Keep everything else in frontend - it's simple vanilla JS
