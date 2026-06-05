@@ -1,112 +1,127 @@
 /**
  * api.js - Backend API Communication Layer
- * 
- * This file contains all functions that communicate with the FastAPI backend.
- * It handles request formatting, response parsing, and error management.
  */
 
-// Backend API base URL
 const API_BASE = CONFIG.API_BASE;
-/**
- * Check if a file is a valid PDF
- * 
- * @param {File} file - The file to validate
- * @returns {boolean} True if file is PDF, false otherwise
- */
+
 function isPDF(file) {
-    return file.type === 'application/pdf' || file.name.endsWith('.pdf');
+    return (
+        file.type === "application/pdf" ||
+        file.name.toLowerCase().endsWith(".pdf")
+    );
 }
 
-/**
- * Upload a PDF file to the backend
- * 
- * This function sends the file to the /upload endpoint as multipart/form-data.
- * The backend processes the PDF, extracts text, chunks it, generates embeddings,
- * and stores them in FAISS.
- * 
- * @param {File} file - The PDF file to upload
- * @returns {Promise<Object>} Response with: {filename, total_chunks, embedding_dimension, message}
- * @throws {Error} If upload fails with descriptive error message
- */
 async function uploadFile(file) {
-    // Validate file is PDF
     if (!isPDF(file)) {
-        throw new Error('Only PDF files are supported');
+        throw new Error("Only PDF files are supported");
     }
 
-    // Create FormData for multipart/form-data submission
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append("file", file);
+
+    console.log("Uploading file:", file.name);
+    console.log("API URL:", `${API_BASE}/upload`);
 
     try {
         const response = await fetch(`${API_BASE}/upload`, {
-            method: 'POST',
-            body: formData
+            method: "POST",
+            body: formData,
         });
 
-        // Handle HTTP errors
+        console.log("Upload status:", response.status);
+
         if (!response.ok) {
             const errorText = await response.text();
-            throw new Error(`Upload failed (${response.status}): ${errorText}`);
+
+            console.error("Backend Error:");
+            console.error(errorText);
+
+            throw new Error(
+                `Upload failed (${response.status}): ${errorText}`
+            );
         }
 
-        // Parse and return JSON response
         const data = await response.json();
+
+        console.log("Upload successful:");
+        console.log(data);
+
         return data;
 
     } catch (error) {
-        // Re-throw with context
-        if (error instanceof TypeError) {
-            throw new Error('Backend unreachable. Check that the backend is running on ' + API_BASE);
+
+        console.error("Upload Exception:");
+        console.error(error);
+
+        if (
+            error.name === "TypeError" &&
+            error.message.includes("fetch")
+        ) {
+            throw new Error(
+                `Cannot connect to backend (${API_BASE})`
+            );
         }
+
         throw error;
     }
 }
 
-/**
- * Ask a question based on uploaded documents
- * 
- * This function sends a question to the /ask endpoint.
- * The backend searches for relevant chunks using embeddings and generates
- * an answer using the Groq LLM.
- * 
- * @param {string} question - The question to ask
- * @returns {Promise<Object>} Response with: {question, answer, retrieved_chunks}
- * @throws {Error} If query fails with descriptive error message
- */
 async function askQuestion(question) {
-    console.log('askQuestion() called with:', question);
-    
-    // Encode question as query parameter
-    const params = new URLSearchParams({ question });
+
+    if (!question || question.trim() === "") {
+        throw new Error("Question cannot be empty");
+    }
+
+    const params = new URLSearchParams({
+        question: question.trim()
+    });
+
     const url = `${API_BASE}/ask?${params}`;
-    
-    console.log('Fetching URL:', url);
+
+    console.log("Question:", question);
+    console.log("Request URL:", url);
 
     try {
+
         const response = await fetch(url, {
-            method: 'POST'
+            method: "POST"
         });
 
-        console.log('Response status:', response.status);
+        console.log("Ask status:", response.status);
 
-        // Handle HTTP errors
         if (!response.ok) {
+
             const errorText = await response.text();
-            throw new Error(`Query failed (${response.status}): ${errorText}`);
+
+            console.error("Backend Error:");
+            console.error(errorText);
+
+            throw new Error(
+                `Query failed (${response.status}): ${errorText}`
+            );
         }
 
-        // Parse and return JSON response
         const data = await response.json();
-        console.log('Response data:', data);
+
+        console.log("Answer received:");
+        console.log(data);
+
         return data;
 
     } catch (error) {
-        console.error('Error in askQuestion:', error);
-        // Re-throw with context
-        if (error instanceof TypeError) {
-            throw new Error('Backend unreachable. Check that the backend is running on ' + API_BASE);
+
+        console.error("Ask Exception:");
+        console.error(error);
+
+        if (
+            error.name === "TypeError" &&
+            error.message.includes("fetch")
+        ) {
+            throw new Error(
+                `Cannot connect to backend (${API_BASE})`
+            );
         }
+
         throw error;
     }
 }
