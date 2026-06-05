@@ -42,6 +42,7 @@ const appState = {
 function initializeApp() {
     console.log('Initializing AI Study Assistant...');
 
+
     // File upload events
     const fileInput = document.getElementById('file-input');
     const uploadBtn = document.getElementById('upload-btn');
@@ -134,44 +135,32 @@ function handleDrop(event) {
  * @param {File} file - The file to upload
  */
 async function handleUpload(file) {
-    // Validate file type
-    if (!isPDF(file)) {
-        displayError('Only PDF files are supported');
-        return;
-    }
 
-    // Prevent concurrent uploads
-    if (appState.isUploading) {
-        displayError('Upload already in progress');
-        return;
-    }
-
-    // Update state
-    appState.isUploading = true;
-    disableUploadButton();
 
     try {
-        // Show loading status
-        updateStatus(`Uploading ${file.name}...`, true, 'loading');
 
-        // Call API
+
         const response = await uploadFile(file);
 
-        // Update state with uploaded document
+        console.log(response);
+
         addUploadedDoc(response.filename, response.total_chunks);
 
-        // Update UI
+
         displayUploadSuccess(response);
+
+
         updateDocumentStatus(appState.hasDocuments);
 
     } catch (error) {
-        // Handle error
-        console.error('Upload error:', error);
-        appState.lastError = error.message;
-        displayError(error.message);
+
+        console.log("ERROR BLOCK");
+        console.error(error);
 
     } finally {
-        // Always re-enable button
+
+        console.log("FINALLY BLOCK");
+
         appState.isUploading = false;
         enableUploadButton();
     }
@@ -188,6 +177,14 @@ async function handleUpload(file) {
  * @param {number} chunks - Number of chunks created
  */
 function addUploadedDoc(filename, chunks) {
+
+    // Keep only the latest document
+    appState.uploadedDocs = [];
+
+    // Clear upload history UI
+    clearUploadHistory();
+
+    // Add new document
     appState.uploadedDocs.push({
         filename: filename,
         chunks: chunks,
@@ -197,7 +194,7 @@ function addUploadedDoc(filename, chunks) {
     // Update UI
     addUploadedDocToUI(filename, chunks);
 
-    // Mark that we have documents
+    // Mark documents available
     setHasDocuments(true);
 }
 

@@ -1,3 +1,3 @@
 const CONFIG = {
-    API_BASE: "https://rag-project-zh1z.onrender.com"
+    API_BASE: "http://127.0.0.1:8000"
 };

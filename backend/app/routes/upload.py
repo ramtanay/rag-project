@@ -6,7 +6,10 @@ from app.services.chunk_service import chunk_text
 from app.services.pdf_service import extract_text_from_pdf
 from app.utils.text_cleaner import clean_text
 from app.services.embedding_service import generate_embeddings_batch
-from app.services.vector_store import store_embeddings
+from app.services.vector_store import (
+    reset_vector_store,
+    store_embeddings
+)
 
 router = APIRouter()
 
@@ -67,7 +70,8 @@ async def upload_file(file: UploadFile = File(...)):
 
         # Store embeddings in FAISS
         print("⏳ Storing embeddings in FAISS...")
-
+        
+        reset_vector_store()
         store_embeddings(
             chunks,
             embeddings

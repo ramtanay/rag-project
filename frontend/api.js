@@ -23,10 +23,14 @@ async function uploadFile(file) {
     console.log("API URL:", `${API_BASE}/upload`);
 
     try {
+        console.log("FETCH START");
+
         const response = await fetch(`${API_BASE}/upload`, {
             method: "POST",
             body: formData,
         });
+
+        console.log("FETCH FINISHED");
 
         console.log("Upload status:", response.status);
 
