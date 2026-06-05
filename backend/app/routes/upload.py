@@ -40,6 +40,10 @@ async def upload_file(file: UploadFile = File(...)):
 
         # Split into chunks
         chunks = chunk_text(cleaned_text)
+        MAX_CHUNKS = 100
+        if len(chunks) > MAX_CHUNKS:
+            chunks = chunks[:MAX_CHUNKS]
+        print(f"Using {len(chunks)} chunks")
         print(f"✓ Text chunked: {len(chunks)} chunks")
 
         if not chunks:

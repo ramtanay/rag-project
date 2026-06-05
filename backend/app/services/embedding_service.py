@@ -30,7 +30,16 @@ def generate_embedding(text):
 def generate_embeddings_batch(texts, batch_size=32):
     embedding_model = get_model()
 
-    embeddings = list(embedding_model.embed(texts))
+    embeddings = []
+
+    for i in range(0, len(texts), batch_size):
+        batch = texts[i:i + batch_size]
+
+        batch_embeddings = list(
+            embedding_model.embed(batch)
+        )
+
+        embeddings.extend(batch_embeddings)
 
     return [emb.tolist() for emb in embeddings]
 
