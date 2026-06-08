@@ -25,5 +25,11 @@ app.include_router(query_router)
 async def root():
     return {"message": "AI Study Assistant Backend Running"}
 
+
+
+@app.get("/health")
+async def health():
+    return {"status": "Healthy"}
+
     
 # this is comment for testing purposes only, please ignore
