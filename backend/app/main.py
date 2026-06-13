@@ -28,8 +28,9 @@ async def root():
 
 
 @app.get("/health")
+@app.head("/health")
 async def health():
-    return {"status": "Healthy"}
+    return {"status": "healthy"}
 
     
 # this is comment for testing purposes only, please ignore
